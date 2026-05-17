@@ -1,8 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.site-nav__toggle');
   const navLinks = document.querySelector('.site-nav__links');
+  const siteNav = document.querySelector('.site-nav');
 
   if (!toggle || !navLinks) return;
+
+  /* Keep --nav-height in sync with actual header size */
+  const updateNavHeight = () => {
+    if (siteNav) {
+      document.documentElement.style.setProperty(
+        '--nav-height',
+        siteNav.offsetHeight + 'px'
+      );
+    }
+  };
+  updateNavHeight();
 
   const closeMenu = () => {
     navLinks.classList.remove('open');
@@ -12,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const openMenu = () => {
+    updateNavHeight();
     navLinks.classList.add('open');
     toggle.classList.add('open');
     toggle.setAttribute('aria-expanded', 'true');
@@ -49,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   window.addEventListener('resize', () => {
+    updateNavHeight();
     if (window.innerWidth > 960) {
       closeMenu();
     }

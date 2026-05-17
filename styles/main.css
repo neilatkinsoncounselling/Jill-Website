@@ -212,11 +212,11 @@ p {
 .site-nav {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 160;
   background-color: rgba(255, 246, 240, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--colour-border);
-  min-height: 72px;
 }
 
 .site-nav__inner {
@@ -955,6 +955,15 @@ p {
 }
 
 @media (max-width: 960px) {
+  /* backdrop-filter creates a new containing block for fixed children,
+     clipping the slide-out menu to the nav bar height. Remove it on
+     mobile and use a solid background instead. */
+  .site-nav {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: rgba(255, 246, 240, 0.97);
+  }
+
   body.menu-open {
     overflow: hidden;
   }
@@ -978,12 +987,12 @@ p {
   .site-nav__links {
     display: flex;
     position: fixed;
-    top: 72px;
+    top: var(--nav-height, 112px);
     right: 0;
     bottom: 0;
     width: min(86vw, 360px);
     padding: 1.5rem 1.4rem 6rem;
-    background-color: rgba(255, 246, 240, 0.98);
+    background-color: #FFF6F0;
     border-left: 1px solid var(--colour-border);
     flex-direction: column;
     justify-content: flex-start;
@@ -995,6 +1004,8 @@ p {
     transition: transform 0.3s ease, opacity 0.3s ease;
     z-index: 150;
     font-size: 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .site-nav__links.open {
